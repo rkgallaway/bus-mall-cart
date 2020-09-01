@@ -29,9 +29,10 @@ var CartItem = function(product, quantity) {
 var Product = function(filePath, name) {
   this.filePath = filePath;
   this.name = name;
-  Product.allProducts.push(this);
+  allProducts.push(this);
 };
-Product.allProducts = [];
+var allProducts = [];
+// allProducts was Product.allProducts
 
 function generateCatalog() {
   new Product('assets/bag.jpg', 'Bag');
