@@ -1,9 +1,10 @@
+'use strict';
 /* global Product, Cart */
 var itemCounterEl = document.getElementById('itemCount');
-var itemCounter = 0;
-//var cartPreview = getElementById('cartContents');
+var cartPreview = document.getElementById('cartContents');
 
-'use strict';
+var itemAdded = '';
+var itemQuantity = '';
 
 // Set up an empty cart for use on this page.
 var cart = new Cart([]);
@@ -40,30 +41,37 @@ function handleSubmit(event) {
 function addSelectedItemToCart() {
   if (event.target === catalogForm) {
     // TODO: suss out the item picked from the select list
-    var itemAdded = event.target.items.value;
+    itemAdded = event.target.items.value;
     // TODO: get the quantity
-    var itemQuantity = event.target.quantity.value;
+    itemQuantity = event.target.quantity.value;
     // TODO: using those, add one item to the Cart
-    var newCartItem = new CartItem(itemAdded, itemQuantity);
-    cart = newCartItem;
-    //console.log(cart);
-    var newCart = new Cart(cart);
+    cart.addItem(itemAdded, itemQuantity)
+    
   }
 
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
 function updateCounter() {
-  itemCounter++;
-  var counterContent = 0;
-  counterContent.textContent = itemCounter;
-  itemCounterEl.append(counterContent);
+    var cartLength = cart.items.length
+    //console.log(cartLength);
+    var cartLenghtString = cartLength.toString();
+    itemCounterEl.innerHTML = '';
+    itemCounterEl.append(cartLenghtString);
  }
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
+  for (var i = 0; i < cart.items.length; i++) {
+    var cartProduct = cart.items[i].product;
+    var cartQuan = cart.items[i].quantity;
+  }
+  var cartItemsPreview = `${cartProduct}, ${cartQuan}`;
   // TODO: Add a new element to the cartContents div with that information
+  var cartPreviewDiv = document.createElement('div');
+  cartPreviewDiv.append(cartItemsPreview);
+  cartPreview.append(cartPreviewDiv);
 }
 
 // Set up the "submit" event listener on the form.
